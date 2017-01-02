@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:latest
+FROM docker:1.12-dind
 
 RUN apk --update add curl wget git
 
@@ -8,4 +8,6 @@ RUN curl -s -L https://github.com/docker/compose/releases/latest | \
     chmod +x /usr/local/bin/docker-compose && \
     /usr/local/bin/docker-compose --version
 
-CMD /usr/local/bin/docker-compose
+ENTRYPOINT ["dockerd-entrypoint.sh"]
+CMD []
+
