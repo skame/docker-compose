@@ -33,7 +33,22 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
         "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME"
+# entrykit
+ENV ENTRYKIT_VERSION 0.4.0
 
+RUN curl -Lo entrykit.tgz https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
+  && tar xzf entrykit.tgz -C /bin \
+  && rm entrykit.tgz \
+  && chmod +x /bin/entrykit \
+  && entrykit --symlink && entrykit -v
+# sigli
+ENV SIGIL_VERSION 0.4.0
+RUN set -ex \
+  && curl -Lo sigil.tgz "https://github.com/gliderlabs/sigil/releases/download/v${SIGIL_VERSION}/sigil_${SIGIL_VERSION}_Linux_x86_64.tgz" \
+  && tar xzf sigil.tgz -C /bin \
+  && rm sigil.tgz && sigil -v
+
+# docker-compose
 RUN curl -s -L https://github.com/docker/compose/releases/latest | \
     egrep -o '/docker/compose/releases/download/[0-9.]*/docker-compose-Linux-x86_64' | \
     wget --base=http://github.com/ -i - -O /usr/local/bin/docker-compose && \
