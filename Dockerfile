@@ -1,6 +1,6 @@
 FROM docker:1.12-dind
 
-RUN apk --update add curl git
+RUN apk --update add curl git jq
 
 # add glibc https://github.com/frol/docker-alpine-glibc/blob/master/Dockerfile
 RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
