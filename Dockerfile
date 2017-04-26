@@ -1,6 +1,6 @@
 FROM docker:1.12-dind
 
-RUN apk --update add curl git jq
+RUN apk --update add curl git jq rsync
 
 # add glibc https://github.com/frol/docker-alpine-glibc/blob/master/Dockerfile
 RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download" && \
@@ -33,6 +33,8 @@ RUN ALPINE_GLIBC_BASE_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases
         "$ALPINE_GLIBC_BASE_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_BIN_PACKAGE_FILENAME" \
         "$ALPINE_GLIBC_I18N_PACKAGE_FILENAME"
+# modify entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/
 
 # entrykit
 RUN curl -Ls https://github.com/progrium/entrykit/releases/ | \
